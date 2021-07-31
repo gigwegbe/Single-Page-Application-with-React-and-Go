@@ -9,9 +9,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   render(){
+
+    const myProps = {
+      title: "My Cool App!", 
+      subject: "My subject", 
+      favourite_color: "red",
+  }
+
     return (
       <div className="app">
-        <AppHeader title="My App"/>
+        <AppHeader {...myProps}/>
         <AppContent/>
         <AppFooter/>
       </div>
