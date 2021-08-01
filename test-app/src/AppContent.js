@@ -2,18 +2,26 @@ import React, { Component } from 'react';
 
 export default class AppContent extends Component {
 
-    state = {posts: []}; 
+   
 
     constructor(props){
         super(props); 
-        this.listRef = React.createRef();
+        this.handlePostChange = this.handlePostChange.bind(this); 
+
     }
 
+    handlePostChange(posts){
+        this.props.handlePostChange(posts);
+    }
+
+    state = {posts: []}; 
+    
     fetchList = () => {
         fetch('https://jsonplaceholder.typicode.com/posts')
             .then((response) => response.json())
             .then(json => {
                this.setState({posts: json});
+               this.handlePostChange(json);
             })
     }
 

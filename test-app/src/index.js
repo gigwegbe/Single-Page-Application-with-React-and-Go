@@ -8,6 +8,18 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 class App extends Component {
+
+  constructor(props){
+    super(props); 
+    this.handlePostChange = this.handlePostChange.bind(this); 
+    this.state = {post: []}; 
+  }
+
+  handlePostChange(posts){
+    this.setState({posts: posts});
+  }
+
+
   render(){
 
     const myProps = {
@@ -18,8 +30,8 @@ class App extends Component {
 
     return (
       <div className="app">
-        <AppHeader {...myProps}/>
-        <AppContent/>
+        <AppHeader {...myProps} posts={this.state.posts} handlePostChange={this.handlePostChange} />
+        <AppContent handlePostChange={this.handlePostChange} posts={this.state.posts}/>
         <AppFooter/>
       </div>
     );
