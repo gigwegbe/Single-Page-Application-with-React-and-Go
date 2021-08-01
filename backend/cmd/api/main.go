@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"flag"
+	"log"
+	"net/http"
 )
 
 
@@ -22,5 +24,12 @@ func main() {
 
 	fmt.Println("Runninng")
 
+	http.HandleFunc("/status", func(w  http.ResponseWriter, r *http.Request){
+		fmt.Fprint(w, "status")
+	})
+	err := http.ListenAndServe(fmt.Sprintf(":%d", cfg.port), nil)
+	if err != nil {
+		log.Println(err)
+	}
 
 }
