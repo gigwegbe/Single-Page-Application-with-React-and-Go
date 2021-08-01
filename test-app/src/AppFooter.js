@@ -8,6 +8,6 @@ export default class AppFooter extends Component {
                 <hr/>
                 <p className="footer"> Copyright &copy; {currentYear} Acme Ltd.</p>
             </Fragment>
-        )
+        );
     }
 }

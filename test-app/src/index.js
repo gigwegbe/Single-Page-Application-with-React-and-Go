@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import AppFooter from './AppFooter';
 import AppContent from './AppContent';
 import AppHeader from './AppHeader';
+import AppFooterFunctionalComponent from './AppFooterFunctionalComponents';
 
 import './index.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
@@ -32,7 +33,8 @@ class App extends Component {
       <div className="app">
         <AppHeader {...myProps} posts={this.state.posts} handlePostChange={this.handlePostChange} />
         <AppContent handlePostChange={this.handlePostChange} posts={this.state.posts}/>
-        <AppFooter/>
+        {/* <AppFooter/> */}
+        <AppFooterFunctionalComponent myProperty={"Hello World!"}/>
       </div>
     );
   }
