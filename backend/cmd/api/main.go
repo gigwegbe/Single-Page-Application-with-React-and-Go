@@ -1,18 +1,31 @@
 package main 
 
 import (
+	"time"
 	"fmt"
 	"flag"
 	"log"
 	"net/http"
+	"os"
 )
 
 
-const version = "1.0.0"
+const version = "1.2.0"
 
 type config struct {
 	port int 
 	env string 
+}
+
+type AppStatus struct {
+	Status  string `json:"status"`
+	Environment  string `json:"environment"`
+	Version  string `json:"version"`
+}
+
+type application struct {
+	config config 
+	logger *log.Logger 
 }
 
 func main() {
@@ -22,14 +35,25 @@ func main() {
 	flag.StringVar(&cfg.env, "env", "development", "Application environment(development | production)")
 	flag.Parse()
 
-	fmt.Println("Runninng")
+	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime )
 
-	http.HandleFunc("/status", func(w  http.ResponseWriter, r *http.Request){
-		fmt.Fprint(w, "status")
-	})
-	err := http.ListenAndServe(fmt.Sprintf(":%d", cfg.port), nil)
-	if err != nil {
-		log.Println(err)
+	app := &application {
+		config: cfg, 
+		logger: logger, 
 	}
 
+	srv := &http.Server{
+		Addr: fmt.Sprintf(":%d", cfg.port),
+		Handler: app.routes(),
+		IdleTimeout: time.Minute, 
+		ReadTimeout: 10 * time.Second, 
+		WriteTimeout: 30 * time.Second,
+	}
+
+	logger.Println("Starting server on port", cfg.port)
+
+	err := srv.ListenAndServe()
+	if err != nil {
+	log.Println(err)
+	}
 }
