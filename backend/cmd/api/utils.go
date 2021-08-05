@@ -9,13 +9,14 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data interf
 	wrapper := make(map[string]interface{})
 
 	wrapper[wrap] = data
+
 	js, err := json.Marshal(wrapper)
 	if err != nil {
 		return err
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(status)
 	w.Write(js)
 
 	return nil
@@ -23,8 +24,9 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data interf
 
 func (app *application) errorJSON(w http.ResponseWriter, err error) {
 	type jsonError struct {
-		Message string `json:"Message"`
+		Message string `json:"message"`
 	}
+
 	theError := jsonError{
 		Message: err.Error(),
 	}
