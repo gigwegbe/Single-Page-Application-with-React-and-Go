@@ -1,0 +1,2 @@
+- Create a postgres database - '''go_movies'''
+- Run this command:```psql -d go_movies -f go_movies.sql```
